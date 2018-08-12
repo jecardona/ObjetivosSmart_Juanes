@@ -15,7 +15,7 @@ public class Nomina {
 	}
 	
 	public int calcularNomina() {
-		int valorNomina= 0;
+		int valorNomina= 28000000;
 		return valorNomina;
 	}
 }

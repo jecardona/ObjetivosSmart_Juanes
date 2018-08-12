@@ -4,9 +4,9 @@ public class Cargo {
 
 	protected int id;
 	protected String descripcion;
-	protected double salario;
+	protected int salario;
 	
-	public Cargo(int id, String descripcion, double salario) {
+	public Cargo(int id, String descripcion, int salario) {
 		this.id = id;
 		this.descripcion = descripcion;
 		this.salario = salario;
@@ -28,11 +28,11 @@ public class Cargo {
 		this.descripcion = descripcion;
 	}
 
-	public double getSalario() {
+	public int getSalario() {
 		return salario;
 	}
 
-	public void setSalario(double salario) {
+	public void setSalario(int salario) {
 		this.salario = salario;
 	}
 }
