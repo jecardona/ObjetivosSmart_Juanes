@@ -1,6 +1,7 @@
 package clasesJava;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Nomina {
 
@@ -15,7 +16,11 @@ public class Nomina {
 	}
 	
 	public int calcularNomina() {
-		int valorNomina= 28000000;
+		int valorNomina= 0;
+		//Recorre el hashmap de empleados para obtener el salario de cada empleado e irlo sumando en la nómina
+				for(Map.Entry<Integer, Empleado> entry : empleados.entrySet()) {
+					valorNomina += entry.getValue().getCargo().getSalario();
+				}
 		return valorNomina;
 	}
 }
