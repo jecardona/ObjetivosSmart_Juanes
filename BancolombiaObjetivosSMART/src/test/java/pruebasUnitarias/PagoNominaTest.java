@@ -50,6 +50,8 @@ public class PagoNominaTest {
 		//Ejecución de acción
 		
 				int valorNominaObtenido = nominaAgosto.calcularNomina();
+				System.out.println("El valor total de la nómina en la fecha " + 
+						fechaNomina + " es: " + valorNominaObtenido);
 		
 		//Validación de resultado
 				assertEquals(valorNominaEsperado, valorNominaObtenido);
