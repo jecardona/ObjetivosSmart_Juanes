@@ -6,9 +6,11 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import baseDatosMySQL.MySQL;
 import clasesJava.Cargo;
 import clasesJava.Empleado;
 import clasesJava.Nomina;
+import java.sql.SQLException;
 
 public class PagoNominaTest {
 
@@ -24,12 +26,12 @@ public class PagoNominaTest {
 				
 				// Empleados
 
-				Empleado david = new Empleado("David", "1", 1, analista);
-				Empleado juan = new Empleado("Juan", "2", 2, analista);
-				Empleado gloria = new Empleado("Gloria", "3", 3, jefe);
-				Empleado mauro = new Empleado("Mauro", "4", 4, analista);
-				Empleado mari = new Empleado("Mari", "5", 5, analista);
-				Empleado edison = new Empleado("Edison", "6", 6, gerente);
+				Empleado david = new Empleado(1, "David", analista);
+				Empleado juan = new Empleado(2, "Juan", analista);
+				Empleado gloria = new Empleado(3, "Gloria", jefe);
+				Empleado mauro = new Empleado(4, "Mauro", analista);
+				Empleado mari = new Empleado(5, "Mari", analista);
+				Empleado edison = new Empleado(6, "Edison", gerente);
 				
 				//Ingreso de empleados a un HashMap
 				HashMap<Integer, Empleado> empleados = new HashMap<Integer, Empleado>();
@@ -50,7 +52,7 @@ public class PagoNominaTest {
 		//Ejecución de acción
 		
 				int valorNominaObtenido = nominaAgosto.calcularNomina();
-				System.out.println("El valor total de la nómina en la fecha " + 
+				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
 		//Validación de resultado
@@ -69,18 +71,17 @@ public class PagoNominaTest {
 				
 				// Empleados
 
-				Empleado david = new Empleado("David", "1", 1, analista);
-				Empleado juan = new Empleado("Juan", "2", 2, analista);
-				Empleado gloria = new Empleado("Gloria", "3", 3, jefe);
-				Empleado mauro = new Empleado("Mauro", "4", 4, analista);
-				Empleado mari = new Empleado("Mari", "5", 5, analista);
-				Empleado edison = new Empleado("Edison", "6", 6, gerente);
-				Empleado wil = new Empleado("Wil", "7", 7, analista);
-				Empleado gio = new Empleado("Gio", "8", 8, analista);
+				Empleado david = new Empleado(1, "David", analista);
+				Empleado juan = new Empleado(2, "Juan", analista);
+				Empleado gloria = new Empleado(3, "Gloria", jefe);
+				Empleado mauro = new Empleado(4, "Mauro", analista);
+				Empleado mari = new Empleado(5, "Mari", analista);
+				Empleado edison = new Empleado(6, "Edison", gerente);
+				Empleado wil = new Empleado(7, "Wil", analista);
+				Empleado gio = new Empleado(8, "Gio", analista);
 				
 				//Ingreso de empleados a un HashMap
-				HashMap<Integer, Empleado> empleados = new HashMap<Integer, Empleado>();
-				
+				HashMap<Integer, Empleado> empleados = new HashMap<Integer, Empleado>();				
 				empleados.put(david.getId(), david);
 				empleados.put(juan.getId(), juan);
 				empleados.put(gloria.getId(), gloria);
@@ -99,7 +100,7 @@ public class PagoNominaTest {
 		//Ejecución de acción
 		
 				int valorNominaObtenido = nominaAgosto.calcularNomina();
-				System.out.println("El valor total de la nómina en la fecha " + 
+				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
 		//Validación de resultado
@@ -118,16 +119,16 @@ public class PagoNominaTest {
 				
 				// Empleados
 
-				Empleado david = new Empleado("David", "1", 1, analista);
-				Empleado juan = new Empleado("Juan", "2", 2, analista);
-				Empleado gloria = new Empleado("Gloria", "3", 3, jefe);
-				Empleado mauro = new Empleado("Mauro", "4", 4, analista);
-				Empleado mari = new Empleado("Mari", "5", 5, analista);
-				Empleado edison = new Empleado("Edison", "6", 6, gerente);
-				Empleado wil = new Empleado("Wil", "7", 7, analista);
-				Empleado gio = new Empleado("Gio", "8", 8, analista);
-				Empleado edwin = new Empleado("Edwin", "9", 9, analista);
-				Empleado angela = new Empleado("Angela", "10", 10, analista);
+				Empleado david = new Empleado(1, "David", analista);
+				Empleado juan = new Empleado(2, "Juan", analista);
+				Empleado gloria = new Empleado(3, "Gloria", jefe);
+				Empleado mauro = new Empleado(4, "Mauro", analista);
+				Empleado mari = new Empleado(5, "Mari", analista);
+				Empleado edison = new Empleado(6, "Edison", gerente);
+				Empleado wil = new Empleado(7, "Wil", analista);
+				Empleado gio = new Empleado(8, "Gio", analista);
+				Empleado edwin = new Empleado(9, "Edwin", analista);
+				Empleado angela = new Empleado(10, "Angela", analista);
 				
 				//Ingreso de empleados a un HashMap
 				HashMap<Integer, Empleado> empleados = new HashMap<Integer, Empleado>();
@@ -152,63 +153,119 @@ public class PagoNominaTest {
 		//Ejecución de acción
 		
 				int valorNominaObtenido = nominaAgosto.calcularNomina();
-				System.out.println("El valor total de la nómina en la fecha " + 
+				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
 		//Validación de resultado
 				assertEquals(valorNominaEsperado, valorNominaObtenido);
 	}
 	
-	/*
+	
 	@Test
-	public void debeCalcularPagoNominaCuandoTengaOchoEmpleadosFail() {
+	public void debeCalcularPagoNominaConsultandoBaseDatosMySQL() throws SQLException {
 		
 		//Asignación de datos
 		
-				//Cargos
-				Cargo gerente = new Cargo(1, "Gerente", 10000000);
-				Cargo jefe = new Cargo(2, "Jefe", 6000000);
-				Cargo analista = new Cargo(3, "Analista", 3000000);
-				
-				// Empleados
-
-				Empleado david = new Empleado("David", "1", 1, analista);
-				Empleado juan = new Empleado("Juan", "2", 2, analista);
-				Empleado gloria = new Empleado("Gloria", "3", 3, jefe);
-				Empleado mauro = new Empleado("Mauro", "4", 4, analista);
-				Empleado mari = new Empleado("Mari", "5", 5, analista);
-				Empleado edison = new Empleado("Edison", "6", 6, gerente);
-				Empleado wil = new Empleado("Wil", "7", 7, analista);
-				Empleado gio = new Empleado("Gio", "8", 8, analista);
-				
-				//Ingreso de empleados a un HashMap
-				HashMap<Integer, Empleado> empleados = new HashMap<Integer, Empleado>();
-				
-				empleados.put(david.getId(), david);
-				empleados.put(juan.getId(), juan);
-				empleados.put(gloria.getId(), gloria);
-				empleados.put(mauro.getId(), mauro);
-				empleados.put(mari.getId(), mari);
-				empleados.put(edison.getId(), edison);
-				empleados.put(wil.getId(), wil);
-				empleados.put(gio.getId(), gio);
+				//Conexión Base de datos
+				MySQL db = new MySQL();
+		        db.MySQLConnect();
+		        
+		        // Nombre base de datos y tabla
+		        String tablaCargo = "empresa.cargo";
+		       
+		        //Query para consultar la tabla cargo       
+		        String queryCargos = "SELECT * FROM " + tablaCargo;
+		       
+		        /* Se crea una declaración y se establece el Query que se
+		        *  desea ejecutar
+		        */
+		       
+		        db.comando = db.conexion.createStatement();
+		        db.registro = db.comando.executeQuery(queryCargos);
+		       
+		        Cargo gerente = null;
+		        Cargo jefe = null;
+		        Cargo analista= null;
+		       
+		        /* Recorrer resultado de la consulta para mapear los datos de
+		        * la base de datos e instanciar la clase java Cargo
+		        */
+		       
+		        while (db.registro.next()) {
+		        	
+		        	int idCargo = Integer.parseInt(db.registro.getString(1));
+		          
+		        	switch (idCargo) {
+		        		case 1: gerente = new Cargo(idCargo, db.registro.getString(2), 
+		           				Integer.parseInt(db.registro.getString(3)));
+		           				break;
+		           		case 2: jefe = new Cargo(idCargo, db.registro.getString(2), 
+		           				Integer.parseInt(db.registro.getString(3)));
+		           				break;
+		           		case 3: analista = new Cargo(idCargo, db.registro.getString(2), 
+		           				Integer.parseInt(db.registro.getString(3)));
+		           				break;
+		           		default: break;
+		        	}           
+		        }
+		       
+		        // Nombre base de datos y tabla
+		        String tablaEmpleado = "empresa.empleado";
+		      
+		        //Query para consultar la tabla empleado 
+		        String queryEmpleados = "SELECT * FROM " + tablaEmpleado;
+		      
+		        /* Se crea una declaración y se establece el Query que se
+		      	*	desea ejecutar
+		        */
+		      
+		        db.comando = db.conexion.createStatement();
+		        db.registro = db.comando.executeQuery(queryEmpleados);
+		
+		        //HashMap para almacenar los empleados que están en la base de datos
+		        HashMap<Integer, Empleado> empleados = new HashMap<Integer, Empleado>();
+		      
+		        Empleado empleado = null;
+		        
+		        /* Recorrer resultado de la consulta para mapear los datos de
+		         * la base de datos e instanciar la clase java Empleado
+		         */
+		        while (db.registro.next()) {
+		        	int idCargo = Integer.parseInt(db.registro.getString(3));
+		            
+		        	switch (idCargo) {
+		        		case 1: empleado = new Empleado (Integer.parseInt(db.registro.getString(1)), 
+		        								db.registro.getString(2), gerente);
+		           				break;
+		           		case 2: empleado = new Empleado (Integer.parseInt(db.registro.getString(1)), 
+		           								db.registro.getString(2), jefe);
+		           				break;
+		           		case 3: empleado = new Empleado (Integer.parseInt(db.registro.getString(1)), 
+												db.registro.getString(2), analista);
+		           				break;
+		           		default: break;
+		        	}
+		           	//Almacenar cada uno de los empleados en el hashMap
+		           	empleados.put(empleado.getId(), empleado);
+		        }
+		        
+		        //Cerrar conexión de la base de datos
+		        db.MySQLConnect().close();
 				
 				//Nómina
-				String fechaNomina = "30/08/2018";
-				Nomina nominaAgosto = new Nomina(1, empleados, fechaNomina);
+				String fechaNomina = "30/09/2018";
+				Nomina nominaSeptiembre = new Nomina(1, empleados, fechaNomina);
 				
-				int valorNominaEsperado = 32000000;
+				int valorNominaEsperado = 28000000;
 		
 		//Ejecución de acción
 		
-				int valorNominaObtenido = nominaAgosto.calcularNomina();
-				System.out.println("El valor total de la nómina en la fecha " + 
+				int valorNominaObtenido = nominaSeptiembre.calcularNomina();
+				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
 		//Validación de resultado
 				assertEquals(valorNominaEsperado, valorNominaObtenido);
 	}
-
-	*/
 
 }

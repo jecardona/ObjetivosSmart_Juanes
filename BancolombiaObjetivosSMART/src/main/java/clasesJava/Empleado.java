@@ -3,13 +3,11 @@ package clasesJava;
 public class Empleado {
 
 	protected String nombre;
-	protected String documento;
 	protected int id;
 	protected Cargo cargo;
 	
-	public Empleado(String nombre, String documento, int id, Cargo cargo) {
+	public Empleado(int id, String nombre, Cargo cargo) {
 		this.nombre = nombre;
-		this.documento = documento;
 		this.id = id;
 		this.cargo = cargo;
 	}
@@ -20,14 +18,6 @@ public class Empleado {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public String getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(String documento) {
-		this.documento = documento;
 	}
 	
 	public Cargo getCargo() {

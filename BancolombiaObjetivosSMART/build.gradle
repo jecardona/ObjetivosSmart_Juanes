@@ -27,5 +27,11 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.12'
+    
+    //compile group: 'tomcat', name: 'tomcat-warp', version: '4.1.31'
+    //runtime 'tomcat:tomcat_core:3.3.2'
+    
+    
 }
-
