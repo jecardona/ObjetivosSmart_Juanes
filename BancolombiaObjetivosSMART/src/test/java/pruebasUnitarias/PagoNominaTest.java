@@ -9,6 +9,7 @@ import org.junit.Test;
 import baseDatosMySQL.MySQL;
 import clasesJava.Cargo;
 import clasesJava.Empleado;
+import clasesJava.FactoriaCargos;
 import clasesJava.Nomina;
 import java.sql.SQLException;
 
@@ -20,9 +21,18 @@ public class PagoNominaTest {
 		//Asignación de datos
 		
 				//Cargos
-				Cargo gerente = new Cargo(1, "Gerente", 10000000);
-				Cargo jefe = new Cargo(2, "Jefe", 6000000);
-				Cargo analista = new Cargo(3, "Analista", 3000000);
+		
+				Cargo gerente = FactoriaCargos.getCargo("Gerente");
+				gerente.setId(1);
+				gerente.setDescripcion("Gerente");
+				
+				Cargo analista = FactoriaCargos.getCargo("Analista");
+				analista.setId(3);
+				analista.setDescripcion("Analista");
+				
+				Cargo jefe = FactoriaCargos.getCargo("Jefe");
+				jefe.setId(2);
+				jefe.setDescripcion("Jefe");
 				
 				// Empleados
 
@@ -65,9 +75,18 @@ public class PagoNominaTest {
 		//Asignación de datos
 		
 				//Cargos
-				Cargo gerente = new Cargo(1, "Gerente", 10000000);
-				Cargo jefe = new Cargo(2, "Jefe", 6000000);
-				Cargo analista = new Cargo(3, "Analista", 3000000);
+
+				Cargo gerente = FactoriaCargos.getCargo("Gerente");
+				gerente.setId(1);
+				gerente.setDescripcion("Gerente");
+				
+				Cargo analista = FactoriaCargos.getCargo("Analista");
+				analista.setId(3);
+				analista.setDescripcion("Analista");
+				
+				Cargo jefe = FactoriaCargos.getCargo("Jefe");
+				jefe.setId(2);
+				jefe.setDescripcion("Jefe");
 				
 				// Empleados
 
@@ -113,10 +132,19 @@ public class PagoNominaTest {
 		//Asignación de datos
 		
 				//Cargos
-				Cargo gerente = new Cargo(1, "Gerente", 10000000);
-				Cargo jefe = new Cargo(2, "Jefe", 6000000);
-				Cargo analista = new Cargo(3, "Analista", 3000000);
+
+				Cargo gerente = FactoriaCargos.getCargo("Gerente");
+				gerente.setId(1);
+				gerente.setDescripcion("Gerente");
 				
+				Cargo analista = FactoriaCargos.getCargo("Analista");
+				analista.setId(3);
+				analista.setDescripcion("Analista");
+				
+				Cargo jefe = FactoriaCargos.getCargo("Jefe");
+				jefe.setId(2);
+				jefe.setDescripcion("Jefe");
+		
 				// Empleados
 
 				Empleado david = new Empleado(1, "David", analista);
@@ -186,7 +214,8 @@ public class PagoNominaTest {
 		        Cargo gerente = null;
 		        Cargo jefe = null;
 		        Cargo analista= null;
-		       
+		       		     
+		        
 		        /* Recorrer resultado de la consulta para mapear los datos de
 		        * la base de datos e instanciar la clase java Cargo
 		        */
@@ -196,14 +225,17 @@ public class PagoNominaTest {
 		        	int idCargo = Integer.parseInt(db.registro.getString(1));
 		          
 		        	switch (idCargo) {
-		        		case 1: gerente = new Cargo(idCargo, db.registro.getString(2), 
-		           				Integer.parseInt(db.registro.getString(3)));
+		        		case 1: gerente = FactoriaCargos.getCargo(db.registro.getString(2));
+								gerente.setId(idCargo);
+								gerente.setDescripcion(db.registro.getString(2));
 		           				break;
-		           		case 2: jefe = new Cargo(idCargo, db.registro.getString(2), 
-		           				Integer.parseInt(db.registro.getString(3)));
+		           		case 2: jefe = FactoriaCargos.getCargo(db.registro.getString(2));
+		           				jefe.setId(idCargo);
+		           				jefe.setDescripcion(db.registro.getString(2));
 		           				break;
-		           		case 3: analista = new Cargo(idCargo, db.registro.getString(2), 
-		           				Integer.parseInt(db.registro.getString(3)));
+		           		case 3: analista = FactoriaCargos.getCargo(db.registro.getString(2));
+           						analista.setId(idCargo);
+           						analista.setDescripcion(db.registro.getString(2));
 		           				break;
 		           		default: break;
 		        	}           

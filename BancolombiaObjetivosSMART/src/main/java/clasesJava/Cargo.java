@@ -1,15 +1,17 @@
 package clasesJava;
 
-public class Cargo {
+public abstract class Cargo {
 
-	protected int id;
-	protected String descripcion;
-	protected int salario;
+	private int id;
+	private String descripcion;
 	
-	public Cargo(int id, String descripcion, int salario) {
+	public Cargo() {
+		
+	}
+	
+	public Cargo(int id, String descripcion) {
 		this.id = id;
 		this.descripcion = descripcion;
-		this.salario = salario;
 	}
 
 	public int getId() {
@@ -27,12 +29,6 @@ public class Cargo {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-
-	public int getSalario() {
-		return salario;
-	}
-
-	public void setSalario(int salario) {
-		this.salario = salario;
-	}
+	
+	public abstract int getSalario();
 }
