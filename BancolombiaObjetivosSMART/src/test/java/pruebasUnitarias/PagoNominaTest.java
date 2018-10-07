@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.util.HashMap;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import baseDatosMySQL.MySQL;
@@ -14,26 +16,33 @@ import clasesJava.Nomina;
 import java.sql.SQLException;
 
 public class PagoNominaTest {
+	
+	private Nomina nomina = Nomina.getSingletonInstance(1, null, "");	
+	private Cargo analista = FactoriaCargos.getCargo("Analista");
+	private Cargo jefe = FactoriaCargos.getCargo("Jefe");
+	private Cargo gerente = FactoriaCargos.getCargo("Gerente");
+	
+	@Before
+	 public void antes(){
+		System.out.println("Inicia test");
+		gerente.setId(1);
+		gerente.setDescripcion("Gerente");
+		analista.setId(3);
+		analista.setDescripcion("Analista");
+		jefe.setId(2);
+		jefe.setDescripcion("Jefe");
+	 } 
+	
+	 @After
+	 public void despues(){
+	  System.out.println("Finaliza test");
+	 }
 
 	@Test
 	public void debeCalcularPagoNominaCuandoTengaSeisEmpleados() {
 		
 		//Asignación de datos
-		
-				//Cargos
-		
-				Cargo gerente = FactoriaCargos.getCargo("Gerente");
-				gerente.setId(1);
-				gerente.setDescripcion("Gerente");
-				
-				Cargo analista = FactoriaCargos.getCargo("Analista");
-				analista.setId(3);
-				analista.setDescripcion("Analista");
-				
-				Cargo jefe = FactoriaCargos.getCargo("Jefe");
-				jefe.setId(2);
-				jefe.setDescripcion("Jefe");
-				
+						
 				// Empleados
 
 				Empleado david = new Empleado(1, "David", analista);
@@ -55,13 +64,16 @@ public class PagoNominaTest {
 				
 				//Nómina
 				String fechaNomina = "30/08/2018";
-				Nomina nominaAgosto = new Nomina(1, empleados, fechaNomina);
+				
+				nomina.setId(1);
+				nomina.setEmpleados(empleados);
+				nomina.setFecha(fechaNomina);
 				
 				int valorNominaEsperado = 28000000;
 		
 		//Ejecución de acción
 		
-				int valorNominaObtenido = nominaAgosto.calcularNomina();
+				int valorNominaObtenido = nomina.calcularNomina();
 				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
@@ -73,21 +85,7 @@ public class PagoNominaTest {
 	public void debeCalcularPagoNominaCuandoTengaOchoEmpleados() {
 		
 		//Asignación de datos
-		
-				//Cargos
 
-				Cargo gerente = FactoriaCargos.getCargo("Gerente");
-				gerente.setId(1);
-				gerente.setDescripcion("Gerente");
-				
-				Cargo analista = FactoriaCargos.getCargo("Analista");
-				analista.setId(3);
-				analista.setDescripcion("Analista");
-				
-				Cargo jefe = FactoriaCargos.getCargo("Jefe");
-				jefe.setId(2);
-				jefe.setDescripcion("Jefe");
-				
 				// Empleados
 
 				Empleado david = new Empleado(1, "David", analista);
@@ -112,13 +110,15 @@ public class PagoNominaTest {
 				
 				//Nómina
 				String fechaNomina = "30/08/2018";
-				Nomina nominaAgosto = new Nomina(1, empleados, fechaNomina);
 				
+				nomina.setId(1);
+				nomina.setEmpleados(empleados);
+				nomina.setFecha(fechaNomina);
 				int valorNominaEsperado = 34000000;
 		
 		//Ejecución de acción
 		
-				int valorNominaObtenido = nominaAgosto.calcularNomina();
+				int valorNominaObtenido = nomina.calcularNomina();
 				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
@@ -130,20 +130,6 @@ public class PagoNominaTest {
 	public void debeCalcularPagoNominaCuandoTengaDiezEmpleados() {
 		
 		//Asignación de datos
-		
-				//Cargos
-
-				Cargo gerente = FactoriaCargos.getCargo("Gerente");
-				gerente.setId(1);
-				gerente.setDescripcion("Gerente");
-				
-				Cargo analista = FactoriaCargos.getCargo("Analista");
-				analista.setId(3);
-				analista.setDescripcion("Analista");
-				
-				Cargo jefe = FactoriaCargos.getCargo("Jefe");
-				jefe.setId(2);
-				jefe.setDescripcion("Jefe");
 		
 				// Empleados
 
@@ -174,13 +160,16 @@ public class PagoNominaTest {
 				
 				//Nómina
 				String fechaNomina = "30/08/2018";
-				Nomina nominaAgosto = new Nomina(1, empleados, fechaNomina);
+
+				nomina.setId(1);
+				nomina.setEmpleados(empleados);
+				nomina.setFecha(fechaNomina);
 				
 				int valorNominaEsperado = 40000000;
 		
 		//Ejecución de acción
 		
-				int valorNominaObtenido = nominaAgosto.calcularNomina();
+				int valorNominaObtenido = nomina.calcularNomina();
 				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
@@ -211,11 +200,6 @@ public class PagoNominaTest {
 		        db.comando = db.conexion.createStatement();
 		        db.registro = db.comando.executeQuery(queryCargos);
 		       
-		        Cargo gerente = null;
-		        Cargo jefe = null;
-		        Cargo analista= null;
-		       		     
-		        
 		        /* Recorrer resultado de la consulta para mapear los datos de
 		        * la base de datos e instanciar la clase java Cargo
 		        */
@@ -286,13 +270,16 @@ public class PagoNominaTest {
 				
 				//Nómina
 				String fechaNomina = "30/09/2018";
-				Nomina nominaSeptiembre = new Nomina(1, empleados, fechaNomina);
+				
+				nomina.setId(1);
+				nomina.setEmpleados(empleados);
+				nomina.setFecha(fechaNomina);
 				
 				int valorNominaEsperado = 28000000;
 		
 		//Ejecución de acción
 		
-				int valorNominaObtenido = nominaSeptiembre.calcularNomina();
+				int valorNominaObtenido = nomina.calcularNomina();
 				System.out.println("\nEl valor total de la nómina en la fecha " + 
 						fechaNomina + " es: " + valorNominaObtenido);
 		
