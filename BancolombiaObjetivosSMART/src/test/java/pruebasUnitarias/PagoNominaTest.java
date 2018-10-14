@@ -3,6 +3,7 @@ package pruebasUnitarias;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,26 +12,19 @@ import org.junit.Test;
 import baseDatosMySQL.MySQL;
 import clasesJava.Cargo;
 import clasesJava.Empleado;
-import clasesJava.FactoriaCargos;
 import clasesJava.Nomina;
 import java.sql.SQLException;
 
 public class PagoNominaTest {
 	
 	private Nomina nomina = Nomina.getSingletonInstance(1, null, "");	
-	private Cargo analista = FactoriaCargos.getCargo("Analista");
-	private Cargo jefe = FactoriaCargos.getCargo("Jefe");
-	private Cargo gerente = FactoriaCargos.getCargo("Gerente");
+	private Cargo gerente = new Cargo(1, "Gerente", 10000000);
+	private Cargo jefe = new Cargo(2, "Jefe", 6000000);
+	private Cargo analista = new Cargo(3, "Analista", 3000000);
 	
 	@Before
 	 public void antes(){
 		System.out.println("Inicia test");
-		gerente.setId(1);
-		gerente.setDescripcion("Gerente");
-		analista.setId(3);
-		analista.setDescripcion("Analista");
-		jefe.setId(2);
-		jefe.setDescripcion("Jefe");
 	 } 
 	
 	 @After
@@ -187,7 +181,7 @@ public class PagoNominaTest {
 				MySQL db = new MySQL();
 		        db.MySQLConnect();
 		        
-		        // Nombre base de datos y tabla
+		        //Nombre base de datos y tabla
 		        String tablaCargo = "empresa.cargo";
 		       
 		        //Query para consultar la tabla cargo       
@@ -204,27 +198,19 @@ public class PagoNominaTest {
 		        * la base de datos e instanciar la clase java Cargo
 		        */
 		       
+		        Cargo cargo = null;
+		        //HashMap para almacenar los cargos que están en la base de datos
+		        HashMap<Integer, Cargo> cargos = new HashMap<Integer, Cargo>();
+		        
 		        while (db.registro.next()) {
 		        	
 		        	int idCargo = Integer.parseInt(db.registro.getString(1));
-		          
-		        	switch (idCargo) {
-		        		case 1: gerente = FactoriaCargos.getCargo(db.registro.getString(2));
-								gerente.setId(idCargo);
-								gerente.setDescripcion(db.registro.getString(2));
-		           				break;
-		           		case 2: jefe = FactoriaCargos.getCargo(db.registro.getString(2));
-		           				jefe.setId(idCargo);
-		           				jefe.setDescripcion(db.registro.getString(2));
-		           				break;
-		           		case 3: analista = FactoriaCargos.getCargo(db.registro.getString(2));
-           						analista.setId(idCargo);
-           						analista.setDescripcion(db.registro.getString(2));
-		           				break;
-		           		default: break;
-		        	}           
+		        	cargo = new Cargo(idCargo, db.registro.getString(2), 
+	           				Integer.parseInt(db.registro.getString(3)));
+		        	//Almacenar cada uno de los empleados en el hashMap
+		           	cargos.put(cargo.getId(), cargo);
 		        }
-		       
+		        
 		        // Nombre base de datos y tabla
 		        String tablaEmpleado = "empresa.empleado";
 		      
@@ -246,28 +232,28 @@ public class PagoNominaTest {
 		        /* Recorrer resultado de la consulta para mapear los datos de
 		         * la base de datos e instanciar la clase java Empleado
 		         */
+		        
 		        while (db.registro.next()) {
-		        	int idCargo = Integer.parseInt(db.registro.getString(3));
+		        	int idCargoEmpleado = Integer.parseInt(db.registro.getString(3));
 		            
-		        	switch (idCargo) {
-		        		case 1: empleado = new Empleado (Integer.parseInt(db.registro.getString(1)), 
-		        								db.registro.getString(2), gerente);
-		           				break;
-		           		case 2: empleado = new Empleado (Integer.parseInt(db.registro.getString(1)), 
-		           								db.registro.getString(2), jefe);
-		           				break;
-		           		case 3: empleado = new Empleado (Integer.parseInt(db.registro.getString(1)), 
-												db.registro.getString(2), analista);
-		           				break;
-		           		default: break;
-		        	}
+		        	//Recorre el hashmap de cargos hasta obtener el Cargo de cada uno de los empleados
+					for(Map.Entry<Integer, Cargo> entry : cargos.entrySet()) {
+						
+						if(entry.getValue().getId() == idCargoEmpleado) {
+							empleado = new Empleado (Integer.parseInt(db.registro.getString(1)), 
+    								db.registro.getString(2), entry.getValue());
+							break;
+						}
+						
+					}
+		        	
 		           	//Almacenar cada uno de los empleados en el hashMap
 		           	empleados.put(empleado.getId(), empleado);
 		        }
 		        
 		        //Cerrar conexión de la base de datos
 		        db.MySQLConnect().close();
-				
+		        
 				//Nómina
 				String fechaNomina = "30/09/2018";
 				
